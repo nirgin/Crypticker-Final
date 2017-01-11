@@ -27,10 +27,10 @@ class ViewController: CurrencyDataViewController {
   
   @IBOutlet var priceOnDayLabel: UILabel!
   
-  let dateFormatter: NSDateFormatter
+  let dateFormatter: DateFormatter
   
   required init(coder aDecoder: NSCoder) {
-    dateFormatter = NSDateFormatter()
+    dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "EEE M/d"
     
     super.init(coder: aDecoder)!
@@ -46,7 +46,7 @@ class ViewController: CurrencyDataViewController {
     dayLabel.text = ""
   }
   
-  override func viewWillAppear(animated: Bool)  {
+  override func viewWillAppear(_ animated: Bool)  {
     super.viewWillAppear(animated)
     
     fetchPrices{ error in
@@ -58,23 +58,23 @@ class ViewController: CurrencyDataViewController {
     }
   }
   
-  override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-    coordinator.animateAlongsideTransition(nil) { _ in
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    coordinator.animate(alongsideTransition: nil) { _ in
       self.lineChartView.reloadData()
     }
   }
   
-  func updatePriceOnDayLabel(price: BitCoinPrice) {
-    priceOnDayLabel.text = dollarNumberFormatter.stringFromNumber(price.value)
+  func updatePriceOnDayLabel(_ price: BitCoinPrice) {
+    priceOnDayLabel.text = dollarNumberFormatter.string(from: price.value)
   }
   
-  func updateDayLabel(price: BitCoinPrice) {
-    dayLabel.text = dateFormatter.stringFromDate(price.time)
+  func updateDayLabel(_ price: BitCoinPrice) {
+    dayLabel.text = dateFormatter.string(from: price.time)
   }
   
   // MARK: - JBLineChartViewDataSource & JBLineChartViewDelegate
   
-  func lineChartView(lineChartView: JBLineChartView!, didSelectLineAtIndex lineIndex: UInt, horizontalIndex: UInt) {
+  func lineChartView(_ lineChartView: JBLineChartView!, didSelectLineAtIndex lineIndex: UInt, horizontalIndex: UInt) {
     if let prices = prices {
       let price = prices[Int(horizontalIndex)]
       updatePriceOnDayLabel(price)
@@ -82,7 +82,7 @@ class ViewController: CurrencyDataViewController {
     }
   }
   
-  func didUnselectLineInLineChartView(lineChartView: JBLineChartView!) {
+  func didUnselectLineInLineChartView(_ lineChartView: JBLineChartView!) {
     priceOnDayLabel.text = ""
     dayLabel.text = ""
   }

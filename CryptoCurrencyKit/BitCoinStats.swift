@@ -22,28 +22,28 @@
 
 import Foundation
 
-public class BitCoinStats : NSObject, NSCoding {
+open class BitCoinStats : NSObject, NSCoding {
     let marketPriceUSD: NSNumber
-    let time: NSDate
-    override public var description: String {
+    let time: Date
+    override open var description: String {
         return "Price: \(marketPriceUSD) right now (\(time))"
     }
     
     public init(fromJSON json: JSONValue) {
         marketPriceUSD = json["market_price_usd"].number!
         
-        let timeInterval :NSTimeInterval = json["timestamp"].double! / 1000
-        time = NSDate(timeIntervalSince1970: timeInterval)
+        let timeInterval :TimeInterval = json["timestamp"].double! / 1000
+        time = Date(timeIntervalSince1970: timeInterval)
         
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        marketPriceUSD = aDecoder.decodeObjectForKey("marketPriceUSD") as! NSNumber
-        time = aDecoder.decodeObjectForKey("time") as! NSDate
+        marketPriceUSD = aDecoder.decodeObject(forKey: "marketPriceUSD") as! NSNumber
+        time = aDecoder.decodeObject(forKey: "time") as! Date
     }
     
-    public func encodeWithCoder(aCoder: NSCoder)  {
-        aCoder.encodeObject(marketPriceUSD, forKey: "marketPriceUSD")
-        aCoder.encodeObject(time, forKey: "time")
+    open func encode(with aCoder: NSCoder)  {
+        aCoder.encode(marketPriceUSD, forKey: "marketPriceUSD")
+        aCoder.encode(time, forKey: "time")
     }
 }

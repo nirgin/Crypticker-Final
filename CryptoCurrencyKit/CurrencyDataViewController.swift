@@ -22,22 +22,22 @@
 
 import UIKit
 
-public class CurrencyDataViewController: UIViewController, JBLineChartViewDataSource, JBLineChartViewDelegate {
+open class CurrencyDataViewController: UIViewController, JBLineChartViewDataSource, JBLineChartViewDelegate {
   
-  @IBOutlet public var priceLabel: UILabel!
-  @IBOutlet public var priceChangeLabel: UILabel!
-  @IBOutlet public var dayLabel: UILabel!
-  @IBOutlet public var lineChartView: JBLineChartView!
+  @IBOutlet open var priceLabel: UILabel!
+  @IBOutlet open var priceChangeLabel: UILabel!
+  @IBOutlet open var dayLabel: UILabel!
+  @IBOutlet open var lineChartView: JBLineChartView!
   
-  public let dollarNumberFormatter: NSNumberFormatter, prefixedDollarNumberFormatter: NSNumberFormatter
+  open let dollarNumberFormatter: NumberFormatter, prefixedDollarNumberFormatter: NumberFormatter
   
-  public var prices: [BitCoinPrice]?
-  public var priceDifference: NSNumber? {
+  open var prices: [BitCoinPrice]?
+  open var priceDifference: NSNumber? {
     get {
       var difference: NSNumber?
       if (stats != nil && prices != nil) {
         if let yesterdaysPrice = BitCoinService.sharedInstance.yesterdaysPriceUsingPriceHistory(prices!) {
-          difference = NSNumber(float: stats!.marketPriceUSD.floatValue - yesterdaysPrice.value.floatValue)
+          difference = NSNumber(value: stats!.marketPriceUSD.floatValue - yesterdaysPrice.value.floatValue as Float)
         }
       }
       
@@ -45,81 +45,81 @@ public class CurrencyDataViewController: UIViewController, JBLineChartViewDataSo
     }
   }
   
-  public var stats: BitCoinStats?
+  open var stats: BitCoinStats?
   
   public required init?(coder aDecoder: NSCoder) {
-    dollarNumberFormatter = NSNumberFormatter()
-    dollarNumberFormatter.numberStyle = .CurrencyStyle
+    dollarNumberFormatter = NumberFormatter()
+    dollarNumberFormatter.numberStyle = .currency
     dollarNumberFormatter.positivePrefix = ""
     dollarNumberFormatter.negativePrefix = ""
     
-    prefixedDollarNumberFormatter = NSNumberFormatter()
-    prefixedDollarNumberFormatter.numberStyle = .CurrencyStyle
+    prefixedDollarNumberFormatter = NumberFormatter()
+    prefixedDollarNumberFormatter.numberStyle = .currency
     prefixedDollarNumberFormatter.positivePrefix = "+"
     prefixedDollarNumberFormatter.negativePrefix = "-"
     
     super.init(coder: aDecoder)
   }
   
-  public func fetchPrices(completion: (error: NSError?) -> ()) {
+  open func fetchPrices(_ completion: @escaping (_ error: NSError?) -> ()) {
     BitCoinService.sharedInstance.getStats { stats, error in
       BitCoinService.sharedInstance.getMarketPriceInUSDForPast30Days { prices, error in
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
           self.prices = prices
           self.stats = stats
-          completion(error: error)
+          completion(error)
         }
       }
     }
   }
   
-  public func updatePriceLabel() {
+  open func updatePriceLabel() {
     self.priceLabel.text =  priceLabelString()
   }
   
-  public func updatePriceChangeLabel() {
+  open func updatePriceChangeLabel() {
     let stringAndColor = priceChangeLabelStringAndColor()
     priceChangeLabel.textColor = stringAndColor.color
     priceChangeLabel.text = stringAndColor.string
   }
   
-  public func updatePriceHistoryLineChart() {
+  open func updatePriceHistoryLineChart() {
     if let prices = prices {
       let pricesNSArray = prices as NSArray
-      let maxPrice = pricesNSArray.valueForKeyPath("@max.value") as! NSNumber
+      let maxPrice = pricesNSArray.value(forKeyPath: "@max.value") as! NSNumber
       lineChartView.maximumValue = CGFloat(maxPrice.floatValue * 1.02)
       lineChartView.reloadData()
     }
   }
   
-  public func priceLabelString() -> (String) {
-    return dollarNumberFormatter.stringFromNumber(stats?.marketPriceUSD ?? 0) ?? "0"
+  open func priceLabelString() -> (String) {
+    return dollarNumberFormatter.string(from: stats?.marketPriceUSD ?? 0) ?? "0"
   }
   
-  public func priceChangeLabelStringAndColor() -> (string: String, color: UIColor) {
+  open func priceChangeLabelStringAndColor() -> (string: String, color: UIColor) {
     var string: String?
     var color: UIColor?
     
     if let priceDifference = priceDifference {
       if (priceDifference.floatValue > 0) {
-        color = UIColor.greenColor()
+        color = UIColor.green
       } else {
-        color = UIColor.redColor()
+        color = UIColor.red
       }
       
-      string = prefixedDollarNumberFormatter.stringFromNumber(priceDifference)
+      string = prefixedDollarNumberFormatter.string(from: priceDifference)
     }
     
-    return (string ?? "", color ?? UIColor.blueColor())
+    return (string ?? "", color ?? UIColor.blue)
   }
 
   // MARK: - JBLineChartViewDataSource & JBLineChartViewDelegate
   
-  public func numberOfLinesInLineChartView(lineChartView: JBLineChartView!) -> UInt {
+  open func numberOfLines(in lineChartView: JBLineChartView!) -> UInt {
     return 1
   }
   
-  public func lineChartView(lineChartView: JBLineChartView!, numberOfVerticalValuesAtLineIndex lineIndex: UInt) -> UInt {
+  open func lineChartView(_ lineChartView: JBLineChartView!, numberOfVerticalValuesAtLineIndex lineIndex: UInt) -> UInt {
     var numberOfValues = 0
     if let prices = prices {
       numberOfValues = prices.count
@@ -128,7 +128,7 @@ public class CurrencyDataViewController: UIViewController, JBLineChartViewDataSo
     return UInt(numberOfValues)
   }
   
-  public func lineChartView(lineChartView: JBLineChartView!, verticalValueForHorizontalIndex horizontalIndex: UInt, atLineIndex lineIndex: UInt) -> CGFloat {
+  open func lineChartView(_ lineChartView: JBLineChartView!, verticalValueForHorizontalIndex horizontalIndex: UInt, atLineIndex lineIndex: UInt) -> CGFloat {
     var value: CGFloat = 0.0
     if let prices = prices {
       let price = prices[Int(horizontalIndex)]
@@ -138,15 +138,15 @@ public class CurrencyDataViewController: UIViewController, JBLineChartViewDataSo
     return value
   }
   
-  public func lineChartView(lineChartView: JBLineChartView!, widthForLineAtLineIndex lineIndex: UInt) -> CGFloat {
+  open func lineChartView(_ lineChartView: JBLineChartView!, widthForLineAtLineIndex lineIndex: UInt) -> CGFloat {
     return 2.0
   }
   
-  public func lineChartView(lineChartView: JBLineChartView!, colorForLineAtLineIndex lineIndex: UInt) -> UIColor! {
-    return UIColor.whiteColor()
+  open func lineChartView(_ lineChartView: JBLineChartView!, colorForLineAtLineIndex lineIndex: UInt) -> UIColor! {
+    return UIColor.white
   }
   
-  public func verticalSelectionWidthForLineChartView(lineChartView: JBLineChartView!) -> CGFloat {
+  open func verticalSelectionWidth(for lineChartView: JBLineChartView!) -> CGFloat {
     return 1.0;
   }
 

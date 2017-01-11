@@ -22,28 +22,28 @@
 
 import Foundation
 
-public class BitCoinPrice : NSObject, NSCoding {
-    public let value :NSNumber
-    public let time :NSDate
-    override public var description: String {
+open class BitCoinPrice : NSObject, NSCoding {
+    open let value :NSNumber
+    open let time :Date
+    override open var description: String {
         return "Price: $\(value) at \(time)"
     }
     
     public init(fromJSON json: JSONValue) {
         value = json["y"].number!
         
-        let timeInterval :NSTimeInterval = json["x"].double!
-        time = NSDate(timeIntervalSince1970: timeInterval)
+        let timeInterval :TimeInterval = json["x"].double!
+        time = Date(timeIntervalSince1970: timeInterval)
     }
     
     public required init?(coder aDecoder: NSCoder)  {
-        value = aDecoder.decodeObjectForKey("value") as! NSNumber
-        time = aDecoder.decodeObjectForKey("time") as! NSDate
+        value = aDecoder.decodeObject(forKey: "value") as! NSNumber
+        time = aDecoder.decodeObject(forKey: "time") as! Date
     }
     
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(value, forKey: "value")
-        aCoder.encodeObject(time, forKey: "time")
+    open func encode(with aCoder: NSCoder) {
+        aCoder.encode(value, forKey: "value")
+        aCoder.encode(time, forKey: "time")
     }
     
 }

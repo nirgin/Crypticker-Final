@@ -22,8 +22,8 @@
 
 import Foundation
 
-typealias StatsCompletionBlock = (stats: BitCoinStats?, error: NSError?) -> ()
-typealias MarketPriceCompletionBlock = (prices: [BitCoinPrice]?, error: NSError?) -> ()
+typealias StatsCompletionBlock = (_ stats: BitCoinStats?, _ error: NSError?) -> ()
+typealias MarketPriceCompletionBlock = (_ prices: [BitCoinPrice]?, _ error: NSError?) -> ()
 
 class BitCoinService {
   
@@ -33,7 +33,7 @@ class BitCoinService {
   let priceHistoryCacheKey = "BitCoinServicePriceHistoryCache"
   let priceHistoryCachedDateKey = "BitCoinServicePriceHistoryCachedDate"
   
-  let session: NSURLSession
+  let session: URLSession
   
   class var sharedInstance: BitCoinService {
     struct Singleton {
@@ -43,49 +43,49 @@ class BitCoinService {
   }
   
   init() {
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    session = NSURLSession(configuration: configuration)
+    let configuration = URLSessionConfiguration.default
+    session = URLSession(configuration: configuration)
   }
   
-  func getStats(completion: StatsCompletionBlock) {
+  func getStats(_ completion: @escaping StatsCompletionBlock) {
     if let cachedStats: BitCoinStats = getCachedStats() {
-      completion(stats: cachedStats, error: nil)
+      completion(cachedStats, nil)
       return
     }
     
-    let statsUrl = NSURL(string: "https://blockchain.info/stats?format=json")!
-    let request = NSURLRequest(URL: statsUrl)
-    let task = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+    let statsUrl = URL(string: "https://blockchain.info/stats?format=json")!
+    let request = URLRequest(url: statsUrl)
+    let task = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
         if error == nil {
             do {
-                let statsDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments ) as! NSDictionary
+                let statsDictionary = try JSONSerialization.jsonObject(with: data!, options: .allowFragments ) as! NSDictionary
                 let stats: BitCoinStats = BitCoinStats(fromJSON: JSONValue(statsDictionary))
                 self.cacheStats(stats)
-                completion(stats: stats, error: nil)
+                completion(stats, nil)
             } catch let jsonError as NSError {
                 print("Well something happened: \(jsonError)")
-                completion(stats: nil, error: jsonError)
+                completion(nil, jsonError)
             }
         } else {
-            completion(stats: nil, error: error)
+            completion(nil, error as NSError?)
         }
-    }
+    }) 
     
     task.resume()
   }
   
-  func getMarketPriceInUSDForPast30Days(completion: MarketPriceCompletionBlock) {
+  func getMarketPriceInUSDForPast30Days(_ completion: @escaping MarketPriceCompletionBlock) {
     if let cachedPrices: [BitCoinPrice] = getCachedPriceHistory() {
-      completion(prices: cachedPrices, error: nil)
+      completion(cachedPrices, nil)
       return
     }
     
-    let pricesUrl = NSURL(string: "https://blockchain.info/charts/market-price?timespan=30days&format=json")!
-    let request = NSURLRequest(URL: pricesUrl);
-    let task = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+    let pricesUrl = URL(string: "https://blockchain.info/charts/market-price?timespan=30days&format=json")!
+    let request = URLRequest(url: pricesUrl);
+    let task = session.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
         if error == nil {
             do {
-                let pricesDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments ) as! NSDictionary
+                let pricesDictionary = try JSONSerialization.jsonObject(with: data!, options: .allowFragments ) as! NSDictionary
 //                    let json = JSONValue(pricesDictionary)
                 let priceValues = pricesDictionary["values"] as! Array<NSDictionary>
                 var prices = [BitCoinPrice]()
@@ -94,24 +94,24 @@ class BitCoinService {
                     prices.append(price)
                 }
                 self.cachePriceHistory(prices)
-                completion(prices: prices, error: nil)
+                completion(prices, nil)
             } catch let jsonError as NSError {
                 print("Well something happened: \(jsonError)")
-                completion(prices: nil, error: jsonError)
+                completion(nil, jsonError)
             }
         } else {
-            completion(prices: nil, error: error)
+            completion(nil, error as NSError?)
         }
-    }
+    }) 
     
     task.resume()
   }
   
-  func yesterdaysPriceUsingPriceHistory(priceHistory: Array<BitCoinPrice>) -> (BitCoinPrice?) {
+  func yesterdaysPriceUsingPriceHistory(_ priceHistory: Array<BitCoinPrice>) -> (BitCoinPrice?) {
     var yesterdaysPrice: BitCoinPrice?
     
-    for price in Array(priceHistory.reverse()) {
-      if (price.time.isYesterday()) {
+    for price in Array(priceHistory.reversed()) {
+      if ((price.time as NSDate).isYesterday()) {
         yesterdaysPrice = price
         break;
       }
@@ -120,15 +120,15 @@ class BitCoinService {
     return yesterdaysPrice
   }
   
-  func loadCachedDataForKey(key: String, cachedDateKey: String) -> AnyObject? {
+  func loadCachedDataForKey(_ key: String, cachedDateKey: String) -> AnyObject? {
     var cachedValue: AnyObject?
     
-    if let cachedDate = NSUserDefaults.standardUserDefaults().valueForKey(cachedDateKey) as? NSDate {
-      let timeInterval = NSDate().timeIntervalSinceDate(cachedDate)
+    if let cachedDate = UserDefaults.standard.value(forKey: cachedDateKey) as? Date {
+      let timeInterval = Date().timeIntervalSince(cachedDate)
       if (timeInterval < 60*5) {
-        let cachedData = NSUserDefaults.standardUserDefaults().valueForKey(key) as? NSData
+        let cachedData = UserDefaults.standard.value(forKey: key) as? Data
         if cachedData != nil {
-          cachedValue = NSKeyedUnarchiver.unarchiveObjectWithData(cachedData!)
+          cachedValue = NSKeyedUnarchiver.unarchiveObject(with: cachedData!) as AnyObject?
         }
       }
     }
@@ -147,19 +147,19 @@ class BitCoinService {
     return prices
   }
   
-  func cacheStats(stats: BitCoinStats) {
+  func cacheStats(_ stats: BitCoinStats) {
     print(stats, terminator: "")
-    let statsData = NSKeyedArchiver.archivedDataWithRootObject(stats)
+    let statsData = NSKeyedArchiver.archivedData(withRootObject: stats)
     
-    NSUserDefaults.standardUserDefaults().setValue(statsData, forKey: statsCacheKey)
-    NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: statsCachedDateKey)
+    UserDefaults.standard.setValue(statsData, forKey: statsCacheKey)
+    UserDefaults.standard.setValue(Date(), forKey: statsCachedDateKey)
   }
   
-  func cachePriceHistory(history: [BitCoinPrice]) {
-    let priceData = NSKeyedArchiver.archivedDataWithRootObject(history)
+  func cachePriceHistory(_ history: [BitCoinPrice]) {
+    let priceData = NSKeyedArchiver.archivedData(withRootObject: history)
     
-    NSUserDefaults.standardUserDefaults().setValue(priceData, forKey: priceHistoryCacheKey)
-    NSUserDefaults.standardUserDefaults().setValue(NSDate(), forKey: priceHistoryCachedDateKey)
+    UserDefaults.standard.setValue(priceData, forKey: priceHistoryCacheKey)
+    UserDefaults.standard.setValue(Date(), forKey: priceHistoryCachedDateKey)
   }
 }
 

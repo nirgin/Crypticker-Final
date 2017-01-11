@@ -30,15 +30,15 @@ class TodayViewController: CurrencyDataViewController, NCWidgetProviding {
   @IBOutlet weak var toggleLineChartButton: UIButton!
   @IBOutlet weak var lineChartHeightConstraint: NSLayoutConstraint!
   
-  @IBAction func toggleLineChart(sender: UIButton) {
+  @IBAction func toggleLineChart(_ sender: UIButton) {
     if lineChartIsVisible {
       lineChartHeightConstraint.constant = 0
-      let transform = CGAffineTransformMakeRotation(0)
+      let transform = CGAffineTransform(rotationAngle: 0)
       toggleLineChartButton.transform = transform
       lineChartIsVisible = false
     } else {
       lineChartHeightConstraint.constant = 98
-      let transform = CGAffineTransformMakeRotation(CGFloat(180.0 * M_PI/180.0))
+      let transform = CGAffineTransform(rotationAngle: CGFloat(180.0 * M_PI/180.0))
       toggleLineChartButton.transform = transform
       lineChartIsVisible = true
     }
@@ -55,7 +55,7 @@ class TodayViewController: CurrencyDataViewController, NCWidgetProviding {
     priceChangeLabel.text = "--"
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     fetchPrices { error in
@@ -72,24 +72,24 @@ class TodayViewController: CurrencyDataViewController, NCWidgetProviding {
     updatePriceHistoryLineChart()
   }
   
-  func widgetMarginInsetsForProposedMarginInsets(defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
-    return UIEdgeInsetsZero
+  func widgetMarginInsets(forProposedMarginInsets defaultMarginInsets: UIEdgeInsets) -> (UIEdgeInsets) {
+    return UIEdgeInsets.zero
   }
   
-  func widgetPerformUpdateWithCompletionHandler(completionHandler: ((NCUpdateResult) -> Void)) {
+  func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
     fetchPrices { error in
       if error == nil {
         self.updatePriceLabel()
         self.updatePriceChangeLabel()
         self.updatePriceHistoryLineChart()
-        completionHandler(.NewData)
+        completionHandler(.newData)
       } else {
-        completionHandler(.NoData)
+        completionHandler(.noData)
       }
     }
   }
   
-  override func lineChartView(lineChartView: JBLineChartView!, colorForLineAtLineIndex lineIndex: UInt) -> UIColor! {
+  override func lineChartView(_ lineChartView: JBLineChartView!, colorForLineAtLineIndex lineIndex: UInt) -> UIColor! {
     return UIColor(red: 0.17, green: 0.49, blue: 0.82, alpha: 1.0)
   }
   

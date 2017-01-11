@@ -33,6 +33,11 @@
 		83E8FF9C196657C1005F928D /* BitCoinPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8FF97196657C1005F928D /* BitCoinPrice.swift */; };
 		83E8FF9D196657C1005F928D /* BitCoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8FF98196657C1005F928D /* BitCoinService.swift */; };
 		83E8FF9E196657C1005F928D /* BitCoinStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E8FF99196657C1005F928D /* BitCoinStats.swift */; };
+		D54E87491E263ADA00F4E585 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8331C02C19677E9000FBA23E /* NotificationCenter.framework */; };
+		D54E874C1E263ADA00F4E585 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54E874B1E263ADA00F4E585 /* TodayViewController.swift */; };
+		D54E874F1E263ADA00F4E585 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54E874D1E263ADA00F4E585 /* MainInterface.storyboard */; };
+		D54E87531E263ADA00F4E585 /* btcExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D54E87481E263ADA00F4E585 /* btcExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D54E87571E263B6A00F4E585 /* CryptoCurrencyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07DA61891965E3A600E97CC3 /* CryptoCurrencyKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +69,13 @@
 			remoteGlobalIDString = 8359BF59198E15EB00AA077E;
 			remoteInfo = "BTC Widget";
 		};
+		D54E87511E263ADA00F4E585 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07DA615A1965E33100E97CC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D54E87471E263ADA00F4E585;
+			remoteInfo = btcExt;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -84,6 +96,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				D54E87531E263ADA00F4E585 /* btcExt.appex in Embed App Extensions */,
 				8359BF65198E15EB00AA077E /* BTC Widget.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -119,6 +132,10 @@
 		83E8FF97196657C1005F928D /* BitCoinPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitCoinPrice.swift; sourceTree = "<group>"; };
 		83E8FF98196657C1005F928D /* BitCoinService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitCoinService.swift; sourceTree = "<group>"; };
 		83E8FF99196657C1005F928D /* BitCoinStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitCoinStats.swift; sourceTree = "<group>"; };
+		D54E87481E263ADA00F4E585 /* btcExt.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = btcExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D54E874B1E263ADA00F4E585 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		D54E874E1E263ADA00F4E585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		D54E87501E263ADA00F4E585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +163,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D54E87451E263ADA00F4E585 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D54E87571E263B6A00F4E585 /* CryptoCurrencyKit.framework in Frameworks */,
+				D54E87491E263ADA00F4E585 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -155,6 +181,7 @@
 				07DA61641965E33100E97CC3 /* Crypticker */,
 				07DA618A1965E3A600E97CC3 /* CryptoCurrencyKit */,
 				8359BF5C198E15EB00AA077E /* BTC Widget */,
+				D54E874A1E263ADA00F4E585 /* btcExt */,
 				8331C02B19677E9000FBA23E /* Frameworks */,
 				07DA61631965E33100E97CC3 /* Products */,
 			);
@@ -166,6 +193,7 @@
 				07DA61621965E33100E97CC3 /* Crypticker.app */,
 				07DA61891965E3A600E97CC3 /* CryptoCurrencyKit.framework */,
 				8359BF5A198E15EB00AA077E /* BTC Widget.appex */,
+				D54E87481E263ADA00F4E585 /* btcExt.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,6 +290,16 @@
 			name = "Third Party";
 			sourceTree = "<group>";
 		};
+		D54E874A1E263ADA00F4E585 /* btcExt */ = {
+			isa = PBXGroup;
+			children = (
+				D54E874B1E263ADA00F4E585 /* TodayViewController.swift */,
+				D54E874D1E263ADA00F4E585 /* MainInterface.storyboard */,
+				D54E87501E263ADA00F4E585 /* Info.plist */,
+			);
+			path = btcExt;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -297,6 +335,7 @@
 				07DA61A11965E3A600E97CC3 /* PBXTargetDependency */,
 				8359BF64198E15EB00AA077E /* PBXTargetDependency */,
 				8359BF67198E15EB00AA077E /* PBXTargetDependency */,
+				D54E87521E263ADA00F4E585 /* PBXTargetDependency */,
 			);
 			name = Crypticker;
 			productName = Crypticker;
@@ -338,6 +377,23 @@
 			productReference = 8359BF5A198E15EB00AA077E /* BTC Widget.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		D54E87471E263ADA00F4E585 /* btcExt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D54E87541E263ADA00F4E585 /* Build configuration list for PBXNativeTarget "btcExt" */;
+			buildPhases = (
+				D54E87441E263ADA00F4E585 /* Sources */,
+				D54E87451E263ADA00F4E585 /* Frameworks */,
+				D54E87461E263ADA00F4E585 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = btcExt;
+			productName = btcExt;
+			productReference = D54E87481E263ADA00F4E585 /* btcExt.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -345,18 +401,25 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Ray Wenderlich";
 				TargetAttributes = {
 					07DA61611965E33100E97CC3 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0820;
 					};
 					07DA61881965E3A600E97CC3 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0820;
 					};
 					8359BF59198E15EB00AA077E = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0820;
+					};
+					D54E87471E263ADA00F4E585 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -376,6 +439,7 @@
 				07DA61611965E33100E97CC3 /* Crypticker */,
 				07DA61881965E3A600E97CC3 /* CryptoCurrencyKit */,
 				8359BF59198E15EB00AA077E /* BTC Widget */,
+				D54E87471E263ADA00F4E585 /* btcExt */,
 			);
 		};
 /* End PBXProject section */
@@ -403,6 +467,14 @@
 			files = (
 				8359BF62198E15EB00AA077E /* MainInterface.storyboard in Resources */,
 				8359BF6C198E186300AA077E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D54E87461E263ADA00F4E585 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D54E874F1E263ADA00F4E585 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +514,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D54E87441E263ADA00F4E585 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D54E874C1E263ADA00F4E585 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -465,6 +545,11 @@
 			target = 8359BF59198E15EB00AA077E /* BTC Widget */;
 			targetProxy = 8359BF66198E15EB00AA077E /* PBXContainerItemProxy */;
 		};
+		D54E87521E263ADA00F4E585 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D54E87471E263ADA00F4E585 /* btcExt */;
+			targetProxy = D54E87511E263ADA00F4E585 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -474,6 +559,14 @@
 				07DA616C1965E33100E97CC3 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D54E874D1E263ADA00F4E585 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D54E874E1E263ADA00F4E585 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -492,8 +585,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -502,6 +597,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -536,8 +632,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -545,6 +643,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -554,6 +653,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -562,22 +662,26 @@
 		07DA617F1965E33100E97CC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Crypticker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.swift.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		07DA61801965E33100E97CC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Crypticker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.swift.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -586,6 +690,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -603,6 +708,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -613,6 +719,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -625,6 +732,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.swift.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -643,6 +751,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.swift.Crypticker.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -655,6 +764,43 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raywenderlich.swift.Crypticker.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		D54E87551E263ADA00F4E585 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = btcExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.swift.Crypticker.btcExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D54E87561E263ADA00F4E585 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = btcExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.swift.Crypticker.btcExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -696,6 +842,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D54E87541E263ADA00F4E585 /* Build configuration list for PBXNativeTarget "btcExt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D54E87551E263ADA00F4E585 /* Debug */,
+				D54E87561E263ADA00F4E585 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
